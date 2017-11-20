@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Best Buy is ripping you off! My Apple iPhone 10/X Story</title>
+<meta name="description" content="And so, the reversing and programming begins">
+<meta name="keywords" content="android,ios,iphone,iphone10,iphonex,apple,rant,bestbuy">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Best Buy is ripping you off">
+<meta property="og:description" content="And so, the reversing and programming begins">
+<meta property="og:url" content="https://rhcp011235.github.io/posts/rants/iPhone10_Bestbuy/">
+<meta property="og:site_name" content="John's Blog">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://rhcp011235.github.io/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://rhcp011235.github.io/assets/css/i.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="https://rhcp011235.github.io/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header darken">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Rhcp011235</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>?^ذ</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Rhcp011235">Home</a>
+            </li>
+
+
+                <li><a href="https://rhcp011235.github.io/about" >about</a></li>
+
+                <li><a href="https://github.com/rhcp011235" target="_blank">github</a></li>
+
+               <li><a href="https://rhcp011235.github.io/downloads" >downloads</a></li>
+
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+
+  <div class="overlay"></div>
+  
+  <div class="featured-image" style="background-image: url(https://rhcp011235.github.io/images/techpaper1.png)"></div>
+  
+
+
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Amazon Firetv Bootloader unlock reverse + Opensource</h1>
+            </hgroup>
+        </header>
+
+        
+<h2 id="">Explanation of the unlock process</h2>
+<p>
+Well, I guess to start off, I have reversed this method from a exploit posted by Rbox which was actually a bug found by jcase. This was posted on XDA as a binary and I just had to know how it worked. So, Its time for some IDA!
+<br><br>
+
+First thing I noticed is that it was reading the Aboot, So, naturally, I would grab a STOCK Aboot and a Patched Aboot, with further examination, it was quite clear that is was simply a one bit change. Who would think right?
+<br>
+Stock Header of the Aboot
+<br>
+<code>ANDROID-BOOT!\0\0\0\0\0\0\0</code>
+<br>
+Now, the Patched Version using the closed source tool
+<br>
+<code>ANDROID-BOOT!\0\0\0\1\0\0\0</code>
+<br>
+as we can see now, its simply a one bit change.
+
+
+<h2 id="">How to Unlock your boot-loader using my open-source tool</h2>
+
+<h1 id="disclaimer">Disclaimer</h1>
+<p>I am not responsible for any damage that may happen to any devices because of this method. I have only tested this on my own device running the recommended firmware.  If you do not follow this guide <code>exactly</code>, you WILL permanently brick your device. No restore, will help you if you mess up. Good luck!</p>
+
+<h3 id="">1. Got Root?</h3>
+<p>You need root for this process to work. If you do not have root, You will need to get <a href="https://towelroot.com/tr.apk">towelroot</a> </p>
+
+<h3 id="">2. Get my open-source code/tool</h3>
+
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">git clone</span> <span class="n">https://github.com/rhcp011235/firetv_bootloader_unlock.git</span></code></pre></div>
+
+<h3 id="">3. Time to Unlock </h3>
+
+
+<div class="highlight">
+<pre>
+<code class="language-c" data-lang="c"><span class="n">cd firetv_bootloader_unlock/</span> 
+<span class="n">cd binary</span>
+<span class="n">adb push unlock_firetv /data/local/tmp/</span>
+<span class="n">adb shell</span>
+<span class="n">su</span>
+<span class="n">cd /data/local/tmp/</span>
+<span class="n">chmod 755 unlock_firetv</span>
+<span class="n">./unlock_firetv check</span>
+<span class="n">./unlock_firetv unlock</span>
+</div>
+
+<h3 id="changing-back-to-default">Changing Back to Default</h3>
+<p>Since this is hardcoded into <code>Aboot</code> You can do two things. You can restore the firmware back to default or you can simply use my tool :)</p>
+
+
+<div class="highlight">
+<pre>
+<code class="language-c" data-lang="c"><span class="n">cd firetv_bootloader_unlock/</span> 
+<span class="n">cd binary</span>
+<span class="n">adb push unlock_firetv /data/local/tmp/</span>
+<span class="n">adb shell</span>
+<span class="n">su</span>
+<span class="n">cd /data/local/tmp/</span>
+<span class="n">chmod 755 unlock_firetv</span>
+<span class="n">./unlock_firetv check</span>
+<span class="n">./unlock_firetv lock</span>
+</div>
+
+<p>Reboot and it should be back to normal.</p>
+
+
+
+<center><h3>-rhcp011235</h3></center>
+
+
+      <a class="share" href="https://twitter.com/intent/tweet?text=&quot;Amazon Firetv Bootloader unlock reverse + Opensource&quot;%20http://rhcp011235.github.io/posts/android/firetv/unlock/%20via%20&#64;rhcp011235" data-dnt="true">Share</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      </article>
+
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="https://rhcp011235.github.io/posts/android/firetv/unlock/" title="FireTv Unlock">Amazon FireTv Unlock </a></span>
+              
+            </li>
+             </ol>
+
+      <div class="social">
+        <ul>
+            <li><a id="mail" href="mailto:rhcp011235@me.com"><span class="foot-link">Contact Me</span></a></li>
+
+            
+            <li><a id="twit" href="https://twitter.com/rhcp011235" target="_blank"><span class="foot-link">@rhcp011235</span></a></li>
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="https://rhcp011235.github.io/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="https://rhcp011235.github.io/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
+
