@@ -1,8 +1,0 @@
-Origin: rhcp011235 repo
-Label: rhcp011235
-Suite: stable
-Version: 1.0
-Codename: rhcp011235 Repo
-Architectures: iphoneos-arm
-Components: main
-Description: Something Should Go here
